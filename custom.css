@@ -1,0 +1,32 @@
+.wrapper {
+  width: 600px;
+  height: 450px;
+  border: 2px solid #261a1ad1;
+  box-shadow: 11px 12px 8px rgba(0, 0, 0, 0.31), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+.wrapper-row {
+  display: flex;
+  flex-wrap: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+.wrapper .round {
+  width: 150px;
+  height: 150px;
+  z-index: 10;
+  background: #fff;
+}
+.wrapper .round.big {
+  width: 300px;
+  height: 300px;
+}
+.wrapper .round.row2 {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  top: -6px;
+  left: 6px;
+  z-index: 9;
+}
+
+/*# sourceMappingURL=custom.css.map */

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        body,html{width:100%;height:100%;overflow: hidden;background: black;}
+            canvas{
+                background-color: #000;
+            }
+    </style>
+</head>
+<body>
+        <canvas id="scene"></canvas>
+        <script type="text/javascript">
+            var canvas    = document.getElementById("scene");
+            var ctx       = canvas.getContext("2d");
+            var particles = [];
+
+            function drawScene(){
+
+            canvas.width = png.width+200;
+            canvas.height = png.height+200;
+            //canvas.addEventListener("mouseover", doMouseOver, false);
+            canvas.addEventListener('mousemove', move, false);
+            //canvas.addEventListener('mouseout', doMouseOut, false);
+            //canvas.addEventListener('click', doClick, false);
+
+            ctx.drawImage(png, 0, 0);
+
+            var data = ctx.getImageData(0, 0, png.width, png.height);
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+
+            for (var y = 0, y2 = data.height; y < y2; y=y+4) {
+            for (var x = 0, x2 = data.width; x < x2; x=x+4) {
+            if (data.data[(y * 4 * data.width) + (x * 4) + 3] > 128) {
+                var particle = {
+                x : x+100,
+                y : y+100,
+                    y0: y+100,
+                    x0: x+100,
+                    xDelta: 0,
+                    yDelta: 0
+                };
+                particles.push(particle);
+            }
+            }
+            }
+
+                console.log(particles);
+            ctx.fillStyle = "White";
+            
+            var renderStuff = setInterval(function() {
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            for(var i=0, j=particles.length;i<j;i++){
+            var particle = particles[i];
+            ctx.save();
+            // ctx.rotate((Math.PI/180)*2);
+            // ctx.translate(100, 100);
+                if(Math.sqrt(Math.pow(particle.x-particle.x0,2)+Math.pow(particle.y-particle.y0, 2)) > 1){
+                particle.x += particle.xDelta/200;
+                particle.y += particle.yDelta/200;
+                }else{
+                particle.x = particle.x0;
+                particle.y =  particle.y0;
+                }
+            ctx.fillRect(particle.x, particle.y, 2, 2);
+            // ctx.restore();
+            }
+            }, 1);
+
+            }
+
+            var png = new Image();
+            png.onload = drawScene;
+            png.src = "data:image/png;base64,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";
+
+            var offsetX = canvas.offsetLeft;
+            var offsetY = canvas.offsetTop;
+                
+            function doMouseOver(e){
+            // zamani k hover shod
+            // console.log(1);
+            mouseX = parseInt(e.clientX - offsetX);
+                mouseY = parseInt(e.clientY - offsetY);
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            //for(var i=0, j=particles.length;i<j;i++){
+            //ctx.clearRect(particles[i].x, particles[i].y, 2, 2);
+            //}
+            for(var i=0, j=particles.length;i<j;i++){
+            var xDistance = particles[i].x - mouseX;
+                var yDistance = particles[i].y - mouseY;
+                var distance = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
+                angle = Math.atan2(yDistance,xDistance);
+                particles[i].x += Math.cos(angle) * 10;
+                particles[i].y += Math.sin(angle) * 10;
+            ctx.fillRect(particles[i].x, particles[i].y, 2, 2);
+            }
+            }
+            function move(e){
+            // madami k hover hast
+            // console.log(2);
+            mouseX = parseInt(e.clientX - offsetX);
+            mouseY = parseInt(e.clientY - offsetY);
+            //ctx.clearRect(0,0,canvas.width, canvas.height);
+            /*for(var i=0, j=particles.length;i<j;i++){
+            ctx.clearRect(particles[i].x, particles[i].y, 2, 2);
+            }*/
+            for(var i=0, j=particles.length;i<j;i++){
+                var xDistance = particles[i].x - mouseX;
+                var yDistance = particles[i].y - mouseY;
+                var distance = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
+
+                if (distance < 20) {
+                angle = Math.atan2(yDistance,xDistance);
+                particles[i].x += Math.cos(angle) * distance;
+                particles[i].y += Math.sin(angle) * distance;
+
+                particles[i].yDelta = particles[i].y0 - particles[i].y;
+                particles[i].xDelta = particles[i].x0 - particles[i].x;
+                }
+                
+            /* else if(Math.abs(particle.x-particle.x0) > .01){
+                particle.x += particle.xDelta/400;
+                particle.y += particle.yDelta/400;
+                }*/
+            //ctx.fillRect(particles[i].x, particles[i].y, 2, 2);
+            }
+            }
+            function doMouseOut(e){
+            // zamani k kharej shod
+            // console.log(3);
+            }
+            function doClick(e){
+            // zamani k click shod
+            
+            }
+
+        </script>
+</body>
+</html>
